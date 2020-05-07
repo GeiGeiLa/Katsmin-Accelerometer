@@ -1,5 +1,10 @@
 package com.example.accalpha;
 
+
+/**
+ * @author 許劼忞 a.k.a. Katsmin
+ */
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -69,6 +74,7 @@ public class SimpleDataDisplay extends AppCompatActivity implements
     int year, month, day, hour, minute, second;
     int ax, ay, az;
     public static int counter = 0;
+    public static int ccc=  0;
     List<Integer> AX = new ArrayList<Integer>();
     List<Integer> AY = new ArrayList<Integer>();
     List<Integer> AZ = new ArrayList<Integer>();
@@ -76,7 +82,9 @@ public class SimpleDataDisplay extends AppCompatActivity implements
     Calendar calendar;
     LineChart chart;
     private final int X_ANIMATION_PERIOD = 750;
-    private final int REFRESH_PERIOD = 7;
+    private final int WINDOW_SIZE = 125;
+    private final int DEVICE_FREQUENCY = 25;
+    private final int REFRESH_PERIOD = WINDOW_SIZE / DEVICE_FREQUENCY;
     private final int OFFSET = -955;
     private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
         @Override
@@ -130,9 +138,11 @@ public class SimpleDataDisplay extends AppCompatActivity implements
         }
         return -1;
     }
+    // 解析data
     private void displayData(String data) {
         if (data != null) {
-
+            Log.e("EE", data);
+            ccc = 0;
             String time = data.substring(11, 19);
             String acc = data.substring(21);
             String[] accs = acc.split(", ");
@@ -158,7 +168,7 @@ public class SimpleDataDisplay extends AppCompatActivity implements
             AX.add(ax);
             AY.add(ay);
             AZ.add(az);
-            if (counter == REFRESH_PERIOD)
+            if (counter == WINDOW_SIZE)
             {
                 setData(REFRESH_PERIOD, REFRESH_PERIOD);
 

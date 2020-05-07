@@ -34,30 +34,15 @@ public class MainActivity extends AppCompatActivity  {
     boolean hasPermission = false;
     Button permissionButton;
 
-    void initializeComponent()
-    {
-        permissionButton = findViewById(R.id.button2);
-        permissionButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                askForPermission();
-
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, DeviceInfo.class);
-                startActivity(intent);
-
-            }
-        });
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_device_info);
+        getSupportActionBar().setTitle("Finding ACC devices");
+        askForPermission();
+        init();
     }
-    void askOpeningFeatures()
-    {
-//        if(!mBluetoothAdapter.isEnabled() || )
-//        {
-//
-//        }
-    }
+
     boolean askForPermission()
     {
         String[] permissions = {Manifest.permission.BLUETOOTH,Manifest.permission.BLUETOOTH_ADMIN,
@@ -65,10 +50,11 @@ public class MainActivity extends AppCompatActivity  {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
         for(String permission:permissions)
         {
+
             if(ContextCompat.checkSelfPermission(this,permission) != PackageManager.PERMISSION_GRANTED)
             {
+                Log.e(TAG, "Permission error"+permission);
                 requestPermissions(permissions, 1);
-
             }
         }
         return true;
@@ -82,13 +68,15 @@ public class MainActivity extends AppCompatActivity  {
     Handler mHandler;
     boolean mScanning;
 
-
-
-
+    /**
+     * 列舉裝置
+     * @param device
+     */
     void findDevice(BluetoothDevice device)
     {
         if(device.getName() != null)
         {
+            //if(true)
             if(device.getName().startsWith("ACC"))
             {
                 mBluetoothAdapter.stopLeScan(mLeScanCallback);
@@ -100,15 +88,7 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
     BluetoothManager bluetoothManager;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_device_info);
-        getSupportActionBar().setTitle("Finding ACC devices");
-        askForPermission();
-        initializeComponent();
-        init();
-    }
+
     void init()
     {
         mHandler = new Handler();
@@ -121,7 +101,7 @@ public class MainActivity extends AppCompatActivity  {
         mBluetoothAdapter = bluetoothManager.getAdapter();
         if (mBluetoothAdapter == null) {
             Toast.makeText(this, R.string.error_bluetooth_not_supported, Toast.LENGTH_SHORT).show();
-            Log.e("","badp is null");
+            Log.e("","bad is null");
             finish();
             return;
         }
@@ -136,7 +116,9 @@ public class MainActivity extends AppCompatActivity  {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            findDevice(device);
+//                            findDevice(device);
+                            mLeDeviceListAdapter.addDevice(device);
+                            mLeDeviceListAdapter.notifyDataSetChanged();
                         }
                     });
                 }
@@ -207,8 +189,11 @@ public class MainActivity extends AppCompatActivity  {
             if(device.getName() != null )
             {
                 bluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
-                if(device.getName().startsWith("ACC") && !mLeDevices.contains(device)) {
+                if(!mLeDevices.contains(device))
+//                if(device.getName().startsWith("ACC") && !mLeDevices.contains(device))
+                {
                     mLeDevices.add(device);
+//                    // 下面是直接進入ACC
                     mScanning = false;
                     mBluetoothAdapter.stopLeScan(mLeScanCallback);
                     final Intent intent = new Intent(MainActivity.this, DeviceControlActivity.class);
@@ -219,7 +204,7 @@ public class MainActivity extends AppCompatActivity  {
                         mScanning = false;
                     }
                     Log.d(TAG,"Starting");
-                    startActivity(intent);
+                  startActivity(intent);
                 }
             }
         }

@@ -53,7 +53,7 @@ public class DeviceInfo extends AppCompatActivity implements View.OnClickListene
     {
         if(device.getName() != null)
         {
-            if(device.getName().startsWith("ACC_B0A9F17"))
+            if(device.getName().startsWith("ACC"))
             {
                 mBluetoothAdapter.stopLeScan(mLeScanCallback);
                 invalidateOptionsMenu();
@@ -70,7 +70,7 @@ public class DeviceInfo extends AppCompatActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_info);
-        getSupportActionBar().setTitle("HELLO?");
+        getSupportActionBar().setTitle("Detecting BLE devices");
         init();
         askForPermission();
     }
