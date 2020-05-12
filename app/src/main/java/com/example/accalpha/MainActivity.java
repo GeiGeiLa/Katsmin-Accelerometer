@@ -38,6 +38,16 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_info);
+        Button btn_sendNotification = findViewById(R.id.btn_notify);
+        btn_sendNotification.setOnClickListener( new Button.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                
+            }
+        });
+        // getActionBar return null on newer android os
         getSupportActionBar().setTitle("Finding ACC devices");
         askForPermission();
         init();
