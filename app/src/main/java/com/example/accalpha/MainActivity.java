@@ -1,11 +1,14 @@
 package com.example.accalpha;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
@@ -14,6 +17,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,13 +42,42 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_info);
-        Button btn_sendNotification = findViewById(R.id.btn_notify);
+        final Button btn_sendNotification = findViewById(R.id.btn_notify);
         btn_sendNotification.setOnClickListener( new Button.OnClickListener()
         {
             @Override
-            public void onClick(View v)
+            public void onClick(final View v)
             {
-                
+                Log.i(TAG,"Clicked button");
+                Snackbar.make(v,"7秒後會顯示通知",Snackbar.LENGTH_LONG).show();
+                btn_sendNotification.setEnabled(false);
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        final String CHANNEL_ID = "testNotify";
+                        NotificationChannel notifyChannel = new NotificationChannel(
+                                CHANNEL_ID,"channelName", NotificationManager.IMPORTANCE_HIGH);
+                        notifyChannel.setDescription("摔倒通知");
+                        notifyChannel.enableLights(true);
+                        notifyChannel.enableVibration(true);
+                        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+                        notificationManager.createNotificationChannel(notifyChannel);
+
+
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(v.getContext(), CHANNEL_ID)
+                                .setSmallIcon(R.drawable.protobelt)
+                                .setContentTitle("噯呀！")
+                                .setContentText("你似乎摔倒了！")
+                                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+                        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(v.getContext());
+
+                        // notificationId is a unique int for each notification that you must define
+                        notificationManagerCompat.notify(1, builder.build());
+                        Button btn = findViewById(R.id.btn_notify);
+                        btn.setEnabled(true);
+                    }
+                }, 7000);
             }
         });
         // getActionBar return null on newer android os
