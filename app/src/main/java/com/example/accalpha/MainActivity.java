@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
+import androidx.navigation.ui.AppBarConfiguration;
 
 import android.Manifest;
 import android.app.NotificationChannel;
@@ -37,6 +38,7 @@ import static android.content.ContentValues.TAG;
 public class MainActivity extends AppCompatActivity  {
     boolean hasPermission = false;
     Button permissionButton;
+    private AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
