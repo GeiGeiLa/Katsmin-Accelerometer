@@ -25,5 +25,6 @@
     <string name="title_activity_data_display">DataDisplay</string>
     <string name="use_feature_failed1">找不到任何 ACC 裝置</string>
     <string name="use_feature_failed2">開啟藍芽和定位服務後，重新啟動這個 App</string>
-
+    <string name="drawer_open">Drawer opened</string>
+    <string name="drawer_close">Drawer closed</string>
 </resources>

@@ -1,9 +1,12 @@
 package com.example.accalpha;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import android.Manifest;
@@ -29,6 +32,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -40,10 +44,30 @@ public class MainActivity extends AppCompatActivity  {
     Button permissionButton;
     private AppBarConfiguration mAppBarConfiguration;
 
+//  三 Toobar
+    private DrawerLayout drawerLayout;
+    private NavigationView navigation_view;
+    private Toolbar toolbar;
+//
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_info);
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        navigation_view = (NavigationView) findViewById(R.id.navigation_view);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // 用toolbar做為APP的ActionBar
+        setSupportActionBar(toolbar);
+        // 將drawerLayout和toolbar整合，會出現「三」按鈕
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
         final Button btn_sendNotification = findViewById(R.id.btn_notify);
         btn_sendNotification.setOnClickListener( new Button.OnClickListener()
         {
