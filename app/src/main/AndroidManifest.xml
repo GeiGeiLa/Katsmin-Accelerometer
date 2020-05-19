@@ -24,10 +24,6 @@
         tools:ignore="GoogleAppIndexingWarning"
         android:screenOrientation="portrait" >
         <activity android:name=".SimpleDataDisplay"></activity>
-        <activity
-            android:name=".DataDisplay"
-            android:label="@string/title_activity_data_display"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".DeviceInfo" />
         <activity android:name=".MainActivity">
             <intent-filter>

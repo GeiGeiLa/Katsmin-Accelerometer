@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_device_info);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        navigation_view = (NavigationView) findViewById(R.id.navigation_view);
+        navigation_view = (NavigationView) findViewById(R.id.nav_view);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         // 用toolbar做為APP的ActionBar
         setSupportActionBar(toolbar);
