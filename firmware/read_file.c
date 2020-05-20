@@ -27,15 +27,23 @@ bool chunk_append(Chunk* chunk, Acc_values acc)
     chunk->isValid[chunk->current_size++] = true;
     return true;
 }
-void smooth_chunk(Chunk* previous, Chunk* current, Chunk* next)
+void smooth_chunk(Chunk* current)
 {
-    if(previous == NULL)
+    int sumX = 0;
+    int sumY = 0;
+    int sumZ = 0;
+    for(int i = 0; i < current->current_size; i++)
     {
-
+        sumX += current->accs[i].xyz_axis.x;
+        sumY += current->accs[i].xyz_axis.y;
+        sumZ += current->accs[i].xyz_axis.z;
     }
-    else
+    sumX /= current->current_size;
+    sumY /= current->current_size;
+    sumZ /= current->current_size;
+    for (int i = 0; i < current->current_size; i++)
     {
-        
+        current->accs[i].xyz_axis.x = sumX;
+        current->accs[i].xyz_axis.y = sumY;
+        current->accs[i].xyz_axis.z = sumZ;
     }
-    
-}

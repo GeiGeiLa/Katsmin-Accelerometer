@@ -14,11 +14,8 @@ struct _xyz
 typedef struct _xyz XYZAxis;
 struct _acc_values
 {
-    union 
-    {
-        XYZAxis xyz_axis;
-        float result;
-    };
+    XYZAxis xyz_axis;
+    float result;
     bool is_result_avail;
 };
 typedef struct _acc_values Acc_values;
