@@ -13,3 +13,4 @@
 .externalNativeBuild
 .cxx
 Alpha
+/firmware/fireware_test/obj
