@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1590483885 source:d:\projectmedic\accbeta\firmware\test.c
+	<stdio.h>
+	<string.h>
+	<assert.h>
+	"headers.h"
+	"read_file.h"
+
+1590483704 d:\projectmedic\accbeta\firmware\read_file.h
+	<stdbool.h>
+	"headers.h"
+
+1590476165 d:\projectmedic\accbeta\firmware\headers.h
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<stdbool.h>
+
+1590481476 source:d:\projectmedic\accbeta\firmware\read_file.c
+	"read_file.h"
+	<assert.h>
+	<stdbool.h>
+
