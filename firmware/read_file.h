@@ -4,9 +4,12 @@
 #include "headers.h"
 enum calc_status{ SUCCESS = 0, PROCESSING = 1};
 enum axis_status{ NORMAL = 0, INVERTED = 1 };
-#define MAX_CHUNK_SIZE 5
-#define SAMPLE_FREQ 25
-#define BREATH_INTERVAL_SEC 15
+extern const float SMALL_FALL_THRES_HIGH;
+extern const float HIGH_FALL_THRRES_HIGH;
+extern const float DECLINE_BEFORE_FALL_THRES_LOW;
+extern const int WRITE_SIZE;
+extern const int SAMPLE_FREQ;
+#define MAX_CHUNK_SIZE 50
 // Struct definitions
 struct _xyz
 {
@@ -36,8 +39,7 @@ typedef struct _chunk_acc Chunk;
  * Create and initialize unsigned char properties
  *
  */
-Chunk create_chunk(unsigned char chunk_size);
-
+Chunk* new_chunk(const unsigned char chunk_size);
 // append element to chunk
 bool chunk_append(Chunk* chunk, Acc_values acc);
 
@@ -45,7 +47,7 @@ void delete_chunk_element(Chunk* chunk, unsigned char index);
 
 void fix_chunk_values(Chunk* current, XYZAxis* offsets_xyz);
 // average smooth algorithm to smooth
-void smooth_chunk(Chunk* current);
+void smooth_chunk(Chunk* current, const int smooth_window_size);
 
 /*
  * Create acc instances
@@ -83,12 +85,19 @@ void init_cur_status(Current_State* cstate);
 
 XYZAxis find_offset(Chunk* chunk);
 
-Chunk create_chunk(unsigned char chunk_size);
+Chunk create_chunk(const unsigned char chunk_size);
 
-bool is_fall_simple_ver(int* target_buf, int thresh_hi, int thresh_lo, int interval);
+bool is_fall_simple_ver(Chunk* chunk, int thresh_hi, int thresh_lo, int interval);
 
 bool chunk_append_withbuffer(Chunk* chunk,float xc, float yc, float zc);
 
 bool chunk_append(Chunk* chunk, Acc_values acc);
+
+void sput_single_acc(Acc_values* const acc, char* cstring);
+
+void fput_single_acc(Acc_values* const acc, FILE* const fileptr);
+
+void generate_vector_sum_(Chunk* chunk, XYZAxis* offsets);
+
 
 #endif
