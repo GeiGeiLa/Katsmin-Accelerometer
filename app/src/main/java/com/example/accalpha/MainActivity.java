@@ -1,5 +1,6 @@
 package com.example.accalpha;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,6 +25,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -56,10 +58,9 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_info);
-
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        navigation_view = (NavigationView) findViewById(R.id.nav_view);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        drawerLayout = findViewById(R.id.drawerLayout);
+        navigation_view =  findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.toolbar);
         // 用toolbar做為APP的ActionBar
         setSupportActionBar(toolbar);
         // 將drawerLayout和toolbar整合，會出現「三」按鈕
@@ -67,6 +68,33 @@ public class MainActivity extends AppCompatActivity  {
                 this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+
+
+
+        // 設定 sidebar menu 裡面的onClick事件
+        navigation_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                // start activity的做法不好!
+                //                // 點選時收起選單
+//                drawerLayout.closeDrawer(GravityCompat.START);
+//
+//                // 取得選項id
+//                int id = item.getItemId();
+//                switch(id)
+//                {
+//                    case R.id.nav_settings:
+//                        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+//                        startActivity(intent);
+//                        return true;
+//                    default:
+//                        break;
+//                }
+
+                return false;
+            }
+        });
 
         final Button btn_sendNotification = findViewById(R.id.btn_notify);
         btn_sendNotification.setOnClickListener( new Button.OnClickListener()
@@ -303,16 +331,16 @@ public class MainActivity extends AppCompatActivity  {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            DeviceInfo.ViewHolder viewHolder;
+            RecordsFragment.ViewHolder viewHolder;
             // General ListView optimization code.
             if (view == null) {
                 view = mInflator.inflate(R.layout.listitem_device, null);
-                viewHolder = new DeviceInfo.ViewHolder();
+                viewHolder = new RecordsFragment.ViewHolder();
                 viewHolder.deviceAddress = (TextView) view.findViewById(R.id.device_address);
                 viewHolder.deviceName = (TextView) view.findViewById(R.id.device_name);
                 view.setTag(viewHolder);
             } else {
-                viewHolder = (DeviceInfo.ViewHolder) view.getTag();
+                viewHolder = (RecordsFragment.ViewHolder) view.getTag();
             }
 
             BluetoothDevice device = mLeDevices.get(i);

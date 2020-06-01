@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".DeviceInfo">
+        tools:context=".RecordsFragment">
 
         <!-- 若要使用漢堡列，不能少這個 -->
         <androidx.appcompat.widget.Toolbar

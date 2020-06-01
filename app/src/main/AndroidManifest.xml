@@ -23,8 +23,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         android:screenOrientation="portrait" >
-        <activity android:name=".SimpleDataDisplay"></activity>
-        <activity android:name=".DeviceInfo" />
+        <activity android:name="com.example.accalpha.SimpleDataDisplay"></activity>
+        <activity android:name=".RecordsFragment" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,10 +32,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DeviceControlActivity" />
+        <activity android:name="com.example.accalpha.DeviceControlActivity" />
 
         <service
-            android:name=".BluetoothLeService"
+            android:name="com.example.accalpha.BluetoothLeService"
             android:enabled="true" />
     </application>
 

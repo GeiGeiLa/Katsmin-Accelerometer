@@ -8,35 +8,25 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
-import android.bluetooth.le.ScanCallback;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
-public class DeviceInfo extends AppCompatActivity implements View.OnClickListener{
+public class RecordsFragment extends AppCompatActivity implements View.OnClickListener{
     private boolean isConnected = false;
     private BluetoothLeScanner bluetoothLeScanner;
     ArrayList<String> totalListViewData = new ArrayList<String>();
@@ -57,7 +47,7 @@ public class DeviceInfo extends AppCompatActivity implements View.OnClickListene
             {
                 mBluetoothAdapter.stopLeScan(mLeScanCallback);
                 invalidateOptionsMenu();
-                final Intent intent = new Intent(DeviceInfo.this, DeviceControlActivity.class);
+                final Intent intent = new Intent(RecordsFragment.this, DeviceControlActivity.class);
                 intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
                 intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
                 startActivity(intent);
@@ -167,7 +157,7 @@ public class DeviceInfo extends AppCompatActivity implements View.OnClickListene
         public LeDeviceListAdapter() {
             super();
             mLeDevices = new ArrayList<BluetoothDevice>();
-            mInflator = DeviceInfo.this.getLayoutInflater();
+            mInflator = RecordsFragment.this.getLayoutInflater();
         }
         // Device scan callback.
         private BluetoothAdapter.LeScanCallback mLeScanCallback =
@@ -194,7 +184,7 @@ public class DeviceInfo extends AppCompatActivity implements View.OnClickListene
                     mLeDevices.add(device);
                     mScanning = false;
                     mBluetoothAdapter.stopLeScan(mLeScanCallback);
-                    final Intent intent = new Intent(DeviceInfo.this, DeviceControlActivity.class);
+                    final Intent intent = new Intent(RecordsFragment.this, DeviceControlActivity.class);
                     intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
                     intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
                     if (mScanning) {

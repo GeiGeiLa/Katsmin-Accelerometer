@@ -1,6 +1,5 @@
 package com.example.accalpha;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
@@ -20,8 +19,6 @@ import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,7 +78,6 @@ public class DeviceControlActivity extends AppCompatActivity {
                 Log.e("","assert connected");
 
             }
-
         }
 
         @Override
