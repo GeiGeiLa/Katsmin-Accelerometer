@@ -87,7 +87,7 @@ XYZAxis find_offset(Chunk* chunk);
 
 Chunk create_chunk(const unsigned char chunk_size);
 
-bool is_fall_simple_ver(Chunk* chunk, int thresh_hi, int thresh_lo, int interval);
+int num_falls(Chunk* chunk, float thresh_hi, float thresh_lo, int interval, unsigned char cooldown);
 
 bool chunk_append_withbuffer(Chunk* chunk,float xc, float yc, float zc);
 
@@ -98,6 +98,8 @@ void sput_single_acc(Acc_values* const acc, char* cstring);
 void fput_single_acc(Acc_values* const acc, FILE* const fileptr);
 
 void generate_vector_sum_(Chunk* chunk, XYZAxis* offsets);
+void generate_result(Chunk* current, bool use_verbose);
 
+void verbose_result(Chunk* unsmoothed, Chunk* smoothed);
 
 #endif
